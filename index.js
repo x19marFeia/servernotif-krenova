@@ -1,6 +1,7 @@
 var msgService = require("firebase-admin/messaging")
 var express = require("express")
 var admin = require("firebase-admin")
+var cors = require("cors");
 var serviceAccount = require("./safetystove-3ff9e-firebase-adminsdk-kwn5x-3cb2b7dc09.json");
 process.env.GOOGLE_APPLICATION_CREDENTIALS;
 
