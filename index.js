@@ -22,11 +22,11 @@ admin.initializeApp(firebaseConfig);
 const app = express();
 
 
-// app.use(
-//   cors({
-//     methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
-//   })
-// );
+app.use(
+  cors({
+    methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
+  })
+);
 
 app.use(function (req, res, next) {
   res.setHeader("Content-Type", "application/json");
@@ -39,23 +39,14 @@ app.get('/', function (req, res) {
 
 
 //non module api
-app.post("/send", function (req, res) {
+app.post("/sendNotif", function (req, res) {
   res.send({ title: 'send api' });
   admin.database().ref('stove').on('value', (sn) => {
     sn.forEach(async (st) => {
       const data = st.val()
-      console.log(data)
-      if (data.isRunning) {
-        await sendNotification(data.fcmToken, data.isRunning)
-        console.log('stove is running')
-      } else {
-        await sendNotification(data.fcmToken, data.isRunning)
-        console.log('stove is not running')
-      }
+      notifConditioning(data.notifCondition, data.timeOff, data.fcmToken)
     })
   })
-
-
 });
 
 function toStringFromInt(inp) {
