@@ -1,6 +1,5 @@
 var msgService = require("firebase-admin/messaging")
 var express = require("express")
-var cors = require('cors')
 var admin = require("firebase-admin")
 var serviceAccount = require("./safetystove-3ff9e-firebase-adminsdk-kwn5x-3cb2b7dc09.json");
 process.env.GOOGLE_APPLICATION_CREDENTIALS;
@@ -21,19 +20,13 @@ admin.initializeApp(firebaseConfig);
 
 
 const app = express();
-app.use(express.json());
 
-app.use(
-  cors({
-    origin: "*",
-  })
-);
 
-app.use(
-  cors({
-    methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
-  })
-);
+// app.use(
+//   cors({
+//     methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
+//   })
+// );
 
 app.use(function (req, res, next) {
   res.setHeader("Content-Type", "application/json");
