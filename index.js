@@ -116,9 +116,12 @@ async function notifConditioning(notifSwitch, timeOff, token) {
       await notifAvailable(messageNotRunning)
       console.log(" notification 2")
       break
-    case 3: // notif for time event conditon
+    case 3: // notif for time event start conditon
       await notifAvailable(messageTimeOff)
       console.log("notification 3")
+      case 4:
+        await notifAvailable();
+        console.log("notification 4");
       break
     default:
       console.log("default")
