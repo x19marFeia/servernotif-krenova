@@ -50,6 +50,9 @@ app.post("/send", function (req, res) {
   admin.database().ref('stove').on('value', (sn) => {
     sn.forEach(async (st) => {
       const data = st.val()
+      res.send({
+        title: `${data.fcmToken}`
+      });
       notifConditioning(data.notifCondition, data.timeOff, data.fcmToken)
     })
   })
