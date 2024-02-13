@@ -46,7 +46,7 @@ app.get('/', function (req, res) {
 
 //non module api
 app.post("/send", async function (req, res) {
-  res.send({ title: 'send api' });
+  res.send({ title: req.body.token });
   const messageNotRunning = {
     notification: {
       title: "Stove is not running",
