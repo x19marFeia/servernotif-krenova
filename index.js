@@ -17,10 +17,16 @@ const firebaseConfig = {
 };
 admin.initializeApp(firebaseConfig);
 
-// "fcm-node": "^1.6.1",
+
 
 const app = express();
+app.use(express.json());
 
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 
 app.use(
   cors({
@@ -39,7 +45,7 @@ app.get('/', function (req, res) {
 
 
 //non module api
-app.post("/sendNotif", function (req, res) {
+app.post("/send", function (req, res) {
   res.send({ title: 'send api' });
   admin.database().ref('stove').on('value', (sn) => {
     sn.forEach(async (st) => {
@@ -47,6 +53,7 @@ app.post("/sendNotif", function (req, res) {
       notifConditioning(data.notifCondition, data.timeOff, data.fcmToken)
     })
   })
+
 });
 
 function toStringFromInt(inp) {
@@ -87,7 +94,7 @@ async function notifConditioning(notifSwitch, timeOff, token) {
   const messageTimeOff = {
     notification: {
       title: "Time Safety Completed",
-      body: `${toStringFromInt(timeOff)} before your stove will turning off`
+      body: `${toStringFromInt(timeOff)} is completed`
     },
     token: token
   }
