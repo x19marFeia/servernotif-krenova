@@ -45,17 +45,25 @@ app.get('/', function (req, res) {
 
 
 //non module api
-app.post("/send", function (req, res) {
+app.post("/send", async function (req, res) {
   res.send({ title: 'send api' });
-  admin.database().ref('stove').on('value', (sn) => {
-    sn.forEach(async (st) => {
-      const data = st.val()
-      res.send({
-        title: `${data.fcmToken}`
-      });
-      notifConditioning(data.notifCondition, data.timeOff, data.fcmToken)
-    })
-  })
+  const messageNotRunning = {
+    notification: {
+      title: "Stove is not running",
+      body: 'manage your stove setup it can be more safety'
+    },
+    token: req.body.token,
+  }
+  await notifAvailable( messageNotRunning)
+  // admin.database().ref('stove').on('value', (sn) => {
+  //   sn.forEach(async (st) => {
+  //     const data = st.val()
+  //     res.send({
+  //       title: `${data.fcmToken}`
+  //     });
+  //     notifConditioning(data.notifCondition, data.timeOff, data.fcmToken)
+  //   })
+  // })
 
 });
 
